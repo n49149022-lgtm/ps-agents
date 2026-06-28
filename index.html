@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PS://Agents — Визуальный конструктор ИИ-агентов</title>
+<meta name="description" content="Собирайте ИИ-агентов из шагов. Тестируйте логику. Экспортируйте код. Без сервера, без API, без облака. Non-Commercial Open Source.">
+<meta name="keywords" content="ИИ, агенты, конструктор, low-code, open-source, локальный, приватность">
+<meta name="author" content="Николай Александрович Потехин (БАТЕНЬКА)">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://n49149022-lgtm.github.io/ps-agents/">
+<meta property="og:title" content="PS://Agents — Конструктор ИИ-агентов">
+<meta property="og:description" content="Визуальный конструктор пайплайнов ИИ-агентов. Всё в одном HTML-файле. 0 зависимостей.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://n49149022-lgtm.github.io/ps-agents/">
+<meta property="og:image" content="https://n49149022-lgtm.github.io/ps-agents/og-image.png">
+<meta property="og:site_name" content="PS://Agents">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PS://Agents — Конструктор ИИ-агентов">
+<meta name="twitter:description" content="Собирайте агентов из шагов. Тестируйте логику. Экспортируйте код. Без сервера.">
+<meta name="twitter:image" content="https://n49149022-lgtm.github.io/ps-agents/og-image.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--bg:#050505;--bg1:#0a0a0a;--bg2:#111;--bg3:#181818;--bg4:#1f1f1f;--bd:#1a1a1a;--bd2:#2a2a2a;--tx:#ddd;--tx2:#888;--tx3:#4a4a4a;--gn:#00ff88;--gn2:#00cc6a;--gng:rgba(0,255,136,.06);--gng2:rgba(0,255,136,.15);--rd:#ff3b3b;--yl:#ffe14d;--bl:#3b8bff;--cy:#00e5ff;--pk:#ff3bab;--or:#ff8c00}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,136,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.014) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+.bg-g1{position:fixed;width:500px;height:500px;background:var(--gn);border-radius:50%;filter:blur(200px);opacity:.03;top:-200px;right:-100px;pointer-events:none}
+.bg-g2{position:fixed;width:400px;height:400px;background:var(--cy);border-radius:50%;filter:blur(180px);opacity:.025;bottom:-150px;left:-100px;pointer-events:none}
+.bg-scan{position:fixed;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 5%,var(--gn) 50%,transparent 95%);opacity:.04;animation:sc 10s linear infinite;pointer-events:none}
+@keyframes sc{from{top:-2px}to{top:100vh}}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 28px;height:54px;display:flex;align-items:center;background:rgba(5,5,5,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd)}
+.nl{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:700;letter-spacing:-.5px;flex-shrink:0}
+.nl em{font-style:normal;color:var(--gn)}
+.nl-i{width:28px;height:28px;border-radius:7px;background:var(--gng2);border:1px solid rgba(0,255,136,.25);display:flex;align-items:center;justify-content:center;color:var(--gn);font-size:10px;font-weight:800;flex-shrink:0}
+.nr{display:flex;gap:2px;margin-left:auto;flex-shrink:0}
+.na{padding:5px 12px;border-radius:6px;font-size:12px;color:var(--tx2);cursor:pointer;border:none;background:none;font-family:inherit;transition:all .15s}
+.na:hover{color:var(--tx);background:var(--bg3)}
+.gh{width:32px;height:32px;border-radius:7px;border:1px solid var(--bd2);background:transparent;color:var(--tx2);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15px;margin-left:6px;text-decoration:none}
+.gh:hover{background:var(--bg3);color:var(--tx);border-color:var(--tx3)}
+section{position:relative;z-index:5;padding:72px 28px}
+.w{max-width:960px;margin:0:auto}
+.hero{padding-top:124px;padding-bottom:84px;text-align:center}
+.hb{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;border:1px solid rgba(0,255,136,.18);background:var(--gng);font-size:10px;color:var(--gn);font-weight:600;letter-spacing:.5px;margin-bottom:24px}
+.hero h1{font-size:clamp(30px,5vw,54px);font-weight:800;letter-spacing:-2px;line-height:1.1;margin-bottom:16px}
+.hero h1 em{font-style:normal;color:var(--gn)}
+.hs{font-size:clamp(13px,1.7vw,16px);color:var(--tx2);max-width:520px;margin:0 auto 28px;line-height:1.6}
+.hbts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{padding:10px 20px;border-radius:9px;border:none;cursor:pointer;font-size:12.5px;font-weight:600;font-family:inherit;display:inline-flex;align-items:center;gap:7px;transition:all .2s;text-decoration:none}
+.btn-p{background:var(--gn);color:#000}.btn-p:hover{background:var(--gn2);transform:translateY(-2px);box-shadow:0 5px 25px rgba(0,255,136,.2)}
+.btn-o{background:transparent;color:var(--tx2);border:1px solid var(--bd2)}.btn-o:hover{background:var(--bg3);color:var(--tx)}
+.hstats{display:flex;gap:32px;justify-content:center;margin-top:48px}
+.sv{font-size:24px;font-weight:800;color:var(--gn);font-family:'JetBrains Mono',monospace;text-align:center}
+.sl{font-size:10.5px;color:var(--tx3);margin-top:3px;text-align:center}
+.sh{display:flex;align-items:center;gap:10px;margin-bottom:36px}
+.shl{flex:1;height:1px;background:var(--bd)}
+.sht{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--tx3);white-space:nowrap}
+.st{text-align:center;margin-bottom:36px}
+.st h2{font-size:clamp(20px,3.2vw,28px);font-weight:800;letter-spacing:-1px;margin-bottom:6px}
+.st h2 em{font-style:normal;color:var(--gn)}
+.st p{font-size:13px;color:var(--tx2);max-width:440px;margin:0 auto}
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.ac{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden;transition:all .25s}
+.ac:hover{border-color:var(--bd2);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.ac-top{padding:18px 18px 14px;display:flex;align-items:center;gap:11px;cursor:pointer}
+.ac-top:hover .ac-arr{color:var(--tx)}
+.ac-ico{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#000;flex-shrink:0}
+.ac-info{flex:1;min-width:0}
+.ac-nm{font-size:14px;font-weight:700}
+.ac-ds{font-size:11.5px;color:var(--tx2);line-height:1.5}
+.ac-arr{font-size:8px;color:var(--tx3);transition:color .15s,transform .2s}
+.ac-arr.open{transform:rotate(180deg);color:var(--gn)}
+.ac-tags{padding:0 18px 14px;display:flex;flex-wrap:wrap;gap:4px}
+.ac-t{font-size:9px;padding:2px 6px;border-radius:4px;background:var(--bg3);color:var(--tx3);border:1px solid var(--bd);font-weight:500}
+.ac-demo{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.ac-demo.open{max-height:800px}
+.ac-demo-inner{padding:0 18px 18px;border-top:1px solid var(--bd)}
+.ad-input{width:100%;padding:9px 12px;border-radius:7px;border:1px solid var(--bd2);background:var(--bg2);color:var(--tx);font-family:inherit;font-size:12.5px;outline:none;transition:border-color .2s;margin:14px 0 10px}
+.ad-input:focus{border-color:var(--gn);box-shadow:0 0 0 3px rgba(0,255,136,.05)}
+.ad-run{width:100%;padding:9px 16px;border-radius:7px;border:none;background:var(--bg3);color:var(--tx2);cursor:pointer;font-size:12px;font-family:inherit;font-weight:600;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .15s;margin-bottom:14px}
+.ad-run:hover{background:var(--gng);color:var(--gn);border-color:rgba(0,255,136,.2)}
+.ad-run:disabled{opacity:.4;cursor:not-allowed}
+.ad-result{padding:16px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;font-family:'Cormorant Garamond',serif;font-size:15.5px;line-height:1.8;color:var(--tx2);white-space:pre-wrap;word-break:break-word;min-height:60px;position:relative}
+.ad-cursor{display:inline-block;width:2px;height:1em;background:var(--gn);margin-left:1px;vertical-align:text-bottom;animation:blink .5s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.ad-meta{display:flex;gap:14px;padding-top:10px;margin-top:10px;border-top:1px solid var(--bd);font-size:11px;color:var(--tx3);font-family:'JetBrains Mono',monospace}
+.ad-step{display:flex;align-items:center;gap:6px;margin-bottom:4px;opacity:0;transition:opacity .3s}
+.ad-step.vis{opacity:1}
+.ad-step-dot{width:6px;height:6px;border-radius:50%;background:var(--bd2);flex-shrink:0;transition:background .3s}
+.ad-step.vis .ad-step-dot{background:var(--gn)}
+.ad-step-txt{font-size:10.5px}
+.ad-step.vis .ad-step-txt{color:var(--tx2)}
+.lic-box{max-width:680px;margin:0;background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.lic-h{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px}
+.lic-h i{font-size:16px;color:var(--yl)}
+.lic-h span{font-size:14px;font-weight:700}
+.lic-b{padding:20px}
+.lic-b p{font-size:12.5px;color:var(--tx2);line-height:1.7;margin-bottom:12px}
+.lic-b strong{color:var(--tx);font-weight:600}
+.lic-r{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.lr{padding:10px 12px;border-radius:7px;border:1px solid var(--bd)}
+.lr.ok{border-color:rgba(0,255,136,.1);background:rgba(0,255,136,.03)}
+.lr.no{border-color:rgba(255,59,59,.1);background:rgba(255,59,59,.03)}
+.lr-i{font-size:11px;margin-bottom:5px}
+.lr.ok .lr-i{color:var(--gn)}.lr.no .lr-i{color:var(--rd)}
+.lr-t{font-size:11.5px;color:var(--tx2);line-height:1.5}
+.faq-l{max-width:660px;margin:0 auto;display:flex;flex-direction:column;gap:6px}
+.fi{background:var(--bg1);border:1px solid var(--bd);border-radius:9px;overflow:hidden}
+.fq-q{width:100%;padding:14px 18px;border:none;background:none;color:var(--tx);cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;display:flex;align-items:center;justify-content:space-between;text-align:left;gap:10px;transition:color .15s}
+.fq-q:hover{color:var(--gn)}
+.fq-q i{font-size:8px;color:var(--tx3);transition:transform .25s;flex-shrink:0}
+.fq-q.open i{transform:rotate(180deg)}
+.fq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.fq-a.open{max-height:250px}
+.fq-ai{padding:0 18px 14px;font-size:12.5px;color:var(--tx2);line-height:1.7;border-top:1px solid var(--bd)}
+.po-box{max-width:660px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.po{background:var(--bg1);border:1px solid var(--bd);border-radius:9px;padding:16px}
+.po h4{font-size:12px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.po h4 i{font-size:11px;color:var(--cy)}
+.po ul{list-style:none;padding:0}
+.po li{font-size:11.5px;color:var(--tx2);line-height:1.65;padding-left:13px;position:relative}
+.po li::before{content:'·';position:absolute;left:1px;color:var(--tx3);font-weight:700}
+.don-sec{background:var(--bg1);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)}
+.don-box{max-width:580px;margin:0 auto;text-align:center}
+.don-btn{display:inline-flex;align-items:center;gap:9px;padding:13px 28px;border-radius:11px;border:none;background:linear-gradient(135deg,var(--gn),var(--gn2));color:#000;font-weight:800;font-size:15px;font-family:inherit;cursor:pointer;transition:all .25s;margin-bottom:12px}
+.don-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(0,255,136,.25)}
+.don-h{font-size:11px;color:var(--tx3);margin-bottom:24px}
+.dl{display:flex;flex-direction:column;gap:6px;text-align:left}
+.dl-a{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1px solid var(--bd);background:var(--bg2);transition:all .15s;text-decoration:none;color:var(--tx)}
+.dl-a:hover{border-color:var(--bd2);background:var(--bg3);transform:translateX(3px)}
+.dl-i{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.dl-info{flex:1;min-width:0}
+.dl-n{font-size:12px;font-weight:600}
+.dl-d{font-size:10px;color:var(--tx3);margin-top:1px}
+.add-d{width:100%;padding:8px;border-radius:8px;border:1px dashed var(--bd2);background:transparent;color:var(--tx3);cursor:pointer;font-size:12px;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;margin-top:3px}
+.add-d:hover{border-color:var(--gn);color:var(--gn);background:var(--gng)}
+.mb{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:300;display:none;align-items:center;justify-content:center}
+.mb.open{display:flex}
+.md{background:var(--bg1);border:1px solid var(--bd2);border-radius:14px;width:420px;max-width:92vw;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.md-h{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.md-h h3{font-size:14px;font-weight:700}
+.md-x{width:28px;height:28px;border-radius:6px;border:none;background:transparent;color:var(--tx3);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.md-x:hover{background:var(--bg3);color:var(--tx)}
+.mf{margin-bottom:14px}
+.ml{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--tx3);margin-bottom:6px}
+.mi{width:100%;padding:8px 10px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg2);color:var(--tx);font-family:inherit;font-size:12px;outline:none;transition:border-color .2s}
+.mi:focus{border-color:var(--gn);box-shadow:0 0 0 3px rgba(0,255,136,.05)}
+.mh{font-size:10px;color:var(--tx3);margin-top:5px;line-height:1.3}
+.mft{padding:14px 20px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end;gap:6px}
+.mbtn{padding:7px 14px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;transition:all .12s;display:flex;align-items:center;gap:6px}
+.mbtn.p{background:var(--gn);color:#000}.mbtn.p:hover{background:var(--gn2)}
+.mbtn.c{background:var(--bg3);color:var(--tx2)}.mbtn.c:hover{background:var(--bg4);color:var(--tx)}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px}
+.pb{padding:8px;border-radius:6px;border:1px solid var(--bd);background:var(--bg2);color:var(--tx2);cursor:pointer;font-size:11px;font-family:inherit;display:flex;align-items:center;gap:6px;transition:all .12s;text-align:left}
+.pb:hover{border-color:var(--gn);color:var(--gn);background:var(--gng)}
+.pb i{font-size:12px;width:16px;text-align:center}
+.tb{position:fixed;bottom:20px;right:20px;z-index:500;display:flex;flex-direction:column;gap:7px}
+.toast{padding:10px 16px;border-radius:9px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:8px;animation:tI .3s ease;box-shadow:0 8px 28px rgba(0,0,0,.4);background:var(--bg2);border:1px solid rgba(0,255,136,.2);color:var(--gn);font-family:'Space Grotesk',sans-serif}
+.toast.out{animation:tO .3s ease forwards}
+@keyframes tI{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tO{to{opacity:0;transform:translateY(10px)}}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fu .5s ease both}.d1{animation-delay:.06s}.d2{animation-delay:.12s}.d3{animation-delay:.18s}.d4{animation-delay:.24s}
+@media(max-width:680px){section{padding:56px 14px}nav{padding:0 14px}.ag{grid-template-columns:1fr}.lic-r{grid-template-columns:1fr}.po-box{grid-template-columns:1fr}.pg{grid-template-columns:1fr}.hstats{gap:16px;flex-wrap:wrap}.sv{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div><div class="bg-g1"></div><div class="bg-g2"></div><div class="bg-scan"></div>
+<nav>
+<div class="nl"><div class="nl-i">PS</div><span>PS://<em>Agents</em></span></div>
+<div class="nr">
+<button class="na" onclick="document.getElementById('agents').scrollIntoView({behavior:'smooth'})">Агенты</button>
+<button class="na" onclick="document.getElementById('license').scrollIntoView({behavior:'smooth'})">Лицензия</button>
+<button class="na" onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</button>
+<button class="na" onclick="document.getElementById('donate').scrollIntoView({behavior:'smooth'})">Поддержать</button>
+<a class="gh" href="https://github.com/n49149022-lgtm/ps-agents" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+</div>
+</nav>
+<section class="hero">
+<div class="w">
+<div class="hb fu"><i class="fa-solid fa-circle" style="font-size:5px"></i> NON-COMMERCIAL</div>
+<h1 class="fu d1">Визуальный конструктор<br><em>ИИ-агентов</em></h1>
+<p class="hs fu d2">Собирайте агенты из шагов. Тестируйте логику. Экспортируйте код. Без сервера. Без API.</p>
+<div class="hbts fu d3"><a class="btn btn-p" href="#agents"><i class="fa-solid fa-play"></i> Попробовать</a><a class="btn btn-o" href="https://github.com/n49149022-lgtm/ps-agents" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a></div>
+<div class="hstats fu d4">
+<div style="text-align:center"><div class="sv">8</div><div class="sl">Типов шагов</div></div>
+<div style="text-align:center"><div class="sv">4</div><div class="sl">Шаблона</div></div>
+<div style="text-align:center"><div class="sv">3</div><div class="sl">Формата экспорта</div></div>
+<div style="text-align:center"><div class="sv">0</div><div class="sl">Зависимостей</div></div>
+</div>
+</div>
+</section>
+<section id="agents">
+<div class="w">
+<div class="sh"><span class="shl"></span><span class="sht">Агенты</span><span class="shl"></span></div>
+<div class="st"><h2>Попробуйте <em>вживую</em></h2><p>Введите запрос и запустите агент. Без регистрации, без API-ключей.</p></div>
+<div class="ag" id="agGrid"></div>
+</div>
+</section>
+<section id="license" style="background:var(--bg1);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)">
+<div class="w">
+<div class="sh"><span class="shl"></span><span class="sht">Лицензия</span><span class="shl"></span></div>
+<div class="st"><h2>Условия <em>использования</em></h2></div>
+<div class="lic-box">
+<div class="lic-h"><i class="fa-solid fa-scale-balanced"></i><span>PS://Agents Non-Commercial License v1.0</span></div>
+<div class="lic-b">
+<p>Настоящая лицензия регулирует использование программного обеспечения PS://Agents. Устанавливая или используя Программу, вы соглашаетесь с условиями ниже.</p>
+<div class="lic-r">
+<div class="lr ok"><div class="lr-i"><i class="fa-solid fa-check"></i></div><div class="lr-t">Личное использование и изучение исходного кода</div></div>
+<div class="lr ok"><div class="lr-i"><i class="fa-solid fa-check"></i></div><div class="lr-t">Модификация кода для собственных некоммерческих проектов</div></div>
+<div class="lr no"><div class="lr-i"><i class="fa-solid fa-xmark"></i></div><div class="lr-t">Коммерческое использование любой формы</div></div>
+<div class="lr no"><div class="lr-i"><i class="fa-solid fa-xmark"></i></div><div class="lr-t">Встроение в продукты SaaS, платформы, сервисы</div></div>
+</div>
+<p style="margin-top:16px"><strong>Для коммерческого использования</strong> — обратитесь через раздел «Поддержать».</p>
+</div>
+</div>
+</div>
+</section>
+<section id="faq">
+<div class="w">
+<div class="sh"><span class="shl"></span><span class="sht">FAQ</span><span class="shl"></span></div>
+<div class="st"><h2>Частые <em>вопросы</em></h2></div>
+<div class="faq-l" id="faqList"></div>
+</div>
+</section>
+<section id="policy" style="background:var(--bg1);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)">
+<div class="w">
+<div class="sh"><span class="shl"></span><span class="sht">Политика</span><span class="shl"></span></div>
+<div class="st"><h2>Политика <em>использования</em></h2></div>
+<div class="po-box" id="policyBox"></div>
+</div>
+</section>
+<section id="donate" class="don-sec">
+<div class="w">
+<div class="don-box">
+<div class="sh"><span class="shl"></span><span class="sht">Поддержать</span><span class="shl"></span></div>
+<div class="st"><h2>Поддержать <em>проект</em></h2><p>Если инструмент пригодился — вы можете поддержать развитие. Любая сумма важна.</p></div>
+<button class="don-btn" onclick="document.getElementById('dLinks').scrollIntoView({behavior:'smooth',block:'center'})"><i class="fa-solid fa-heart"></i> Поддержать проект</button>
+<p class="don-h">Выберите удобный способ ниже или добавьте свой</p>
+<div class="dl" id="dLinks"></div>
+<button class="add-d" onclick="openModal()"><i class="fa-solid fa-plus"></i> Добавить способ оплаты</button>
+</div>
+</div>
+</section>
+<footer>
+<p>PS://Agents &mdash; Non-Commercial Open Source &middot; <a href="https://github.com/n49149022-lgtm/ps-agents">GitHub</a> &middot; PS://Agents Non-Commercial License v1.0</p>
+</footer>
+<div class="mb" id="modalBg"><div class="md" id="modalEl"></div></div>
+<div class="tb" id="toastBox"></div>
+<script>
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function toast(m){var b=document.getElementById('toastBox');var e=document.createElement('div');e.className='toast';e.innerHTML='<i class="fa-solid fa-circle-check"></i><span>'+m+'</span>';b.appendChild(e);setTimeout(function(){e.classList.add('out');setTimeout(function(){e.remove();},300);},2500);}
+var AGENTS=[{id:'researcher',name:'Researcher',color:'#00ff88',icon:'fa-solid fa-magnifying-glass',desc:'Анализирует тему, извлекает факты, формулирует выводы.',tags:['Аналитика','JSON','Факты'],systemPrompt:'Ты — аналитик. Верни JSON: facts, conclusions, recommendations.',parseMode:'json_path',parsePath:'$',parseTarget:'result',mockFn:function(input){var l=(input||'').toLowerCase();if(l.includes('анализ')) return JSON.stringify({facts:["Точность 94%","Рынок $45 млрд к 2030"],conclusions:["ИИ трансформирует отрасль"],recommendations:["Пилот в радиологии"]},null,2);return 'Анализ выполнен. Статус: завершено.';}},{id:'code-reviewer',name:'Code Reviewer',color:'#ff3bab',icon:'fa-solid fa-bug',desc:'Ревью кода с автофиксом.',tags:['Ревью','Ветвление'],systemPrompt:'Найди ошибки.',parseMode:'json_path',parsePath:'$',parseTarget:'result',conditionVar:'llm_output',conditionContains:'ошибка',mockFn:function(input){var l=(input||'').toLowerCase();if(l.includes('ревью')&&!l.includes('исправь')) return 'Обнаружены ошибки: необработанное исключение, утечка памяти.';return 'Код чист.';}},{id:'content-writer',name:'Content Writer',color:'#3b8bff',icon:'fa-solid fa-pen-nib',desc:'Генерация статей.',tags:['Генерация','Текст'],systemPrompt:'Пиши увлекательно.',parseMode:'json_path',parsePath:'$',parseTarget:'result',transformOp:'trim',transformSource:'llm_output',transformTarget:'clean_text',mockFn:function(input){return 'Квантовые вычисления стоят на пороге революции...';}},{id:'data-analyst',name:'Data Analyst',color:'#ff8c00',icon:'fa-solid fa-chart-line',desc:'Анализ данных в таблицу.',tags:['Данные','Таблицы'],systemPrompt:'Верни JSON metrics.',parseMode:'json_path',parsePath:'$.metrics',parseTarget:'metrics',transformOp:'template',transformSource:'metrics',transformParam:'| Метрика | Знач. |\\n|---|---|\\n{{source}}',transformTarget:'table',mockFn:function(input){return JSON.stringify({summary:"Q4 рост",metrics:[{name:"DAU",value:"1.2M",change:"+15%"}]},null,2);}},{id:'style-forge',name:'StyleForge',color:'#ffe14d',icon:'fa-solid fa-feather-pointed',desc:'Тексты в стиле авторов.',tags:['Стили','Литература'],systemPrompt:'',parseMode:'json_path',parsePath:'$',parseTarget:'result',mockFn:function(input){var l=(input||'').toLowerCase();if(l.includes('достоевск')) return 'Нет, вы только вдумайтесь в это...';if(l.includes('толстой')) return 'В то время как одни люди говорили о великом...';if(l.includes('хеминг')) return 'Мы сидим в кафе. На улице идёт дождь...';if(l.includes('толкин')) return 'И бишь, мало кто из ныне живущих помнит...';if(l.includes('кафка')) return 'Утром, когда Грегор Замза проснулся...';if(l.includes('маркес')) return 'Многие годы спустя, полковник Аурелиано...';if(l.includes('кинг')) return 'Послушайте, я расскажу одну историю...';if(l.includes('чехов')) return 'Когда зашёл разговор, Петр Иванович вдруг замолчал...';return 'Анализ выполнен.';}},{id:'ps-code',name:'PS://Code',color:'#00e5ff',icon:'fa-solid fa-code',desc:'Киберпанк IDE.',tags:['IDE','Терминал'],systemPrompt:'',parseMode:'json_path',parsePath:'$',parseTarget:'result',mockFn:function(){return 'Готово.';}}];
+var FAQ=[{q:'Что это?',a:'Визуальный конструктор пайплайнов ИИ-агентов. Всё в одном HTML.'},{q:'Коммерчески?',a:'Нет. Только личное/некоммерческое использование.'},{q:'API-ключ?',a:'Для симуляции не нужен. Для экспорта — да.'},{q:'Запуск?',a:'Откройте файл в браузере. 0 зависимостей.'}];
+var POLICY=[{title:'Сбор данных',icon:'fa-solid fa-database',items:['0 персональных данных','0 трекеров','Всё локально']},{title:'Безопасность',icon:'fa-solid fa-shield-halved',items:['Ключи не хранятся','Симуляция оффлайн']},{title:'Исходный код',icon:'fa-solid fa-code',items:['Открыт для аудита','Лицензия сохраняется']}];
+var D_LINKS=[{id:'ozon',name:'Ozon Bank SBP',desc:'Сбор средств на развитие',url:'https://finance.ozon.ru/apps/sbp/ozonbankpay/019f0708-09e2-77e5-9566-999762861086',icon:'fa-solid fa-wallet',color:'#00ff88',bg:'rgba(0,255,136,.1)'}];
+var PRESETS=[{n:'Boosty',i:'fa-solid fa-bolt',c:'#ff8c00',u:'',d:'Подписка'},{n:'ЮMoney',i:'fa-solid fa-wallet',c:'#8B3FFD',u:'',d:'Перевод'}];
+function drawAgents(){var el=document.getElementById('agGrid');var h='';for(var i=0;i<AGENTS.length;i++){var a=AGENTS[i];h+='<div class="ac fu" style="animation-delay:'+(i*.07)+'s"><div class="ac-top" onclick="toggleDemo(\\''+a.id+'\\')"><div class="ac-ico" style="background:'+a.color+'"><i class="'+a.icon+'"></i></div><div class="ac-info"><div class="ac-nm">'+esc(a.name)+'</div><div class="ac-ds">'+esc(a.desc)+'</div></div><i class="fa-solid fa-chevron-down ac-arr"></i></div><div class="ac-tags">';for(var j=0;j<a.tags.length;j++) h+='<span class="ac-t">'+esc(a.tags[j])+'</span>';h+='</div><div class="ac-demo" id="demo-'+a.id+'"><div class="ac-demo-inner"><input class="ad-input" id="inp-'+a.id+'" placeholder="Введите запрос..." onkeydown="if(event.key===\\'Enter\\')runDemo(\\''+a.id+'\\')"><button class="ad-run" id="run-'+a.id+'" onclick="runDemo(\\''+a.id+'\\')"><i class="fa-solid fa-play"></i> Запустить</button><div class="ad-result" id="res-'+a.id+'"><span class="ad-cursor" id="cur-'+a.id+'"></span></div><div class="ad-meta" id="meta-'+a.id+'"></div></div></div></div>';}el.innerHTML=h;}
+function toggleDemo(id){var el=document.getElementById('demo-'+id);el.classList.toggle('open');}
+async function runDemo(id){var a=AGENTS.find(function(x){return x.id===id;});if(!a)return;var btn=document.getElementById('run-'+id);var res=document.getElementById('res-'+a.id);var meta=document.getElementById('meta-'+a.id);var input=document.getElementById('inp-'+id).value.trim()||'Демо';btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Выполняется...';res.innerHTML='<span class="ad-cursor" id="cur-'+a.id+'"></span>';meta.innerHTML='';var steps=[{label:'Start',color:'#00ff88'},{label:'LLM Call',color:'#3b8bff'},{label:'Parse',color:'#ffe14d'},{label:'Output',color:'#00cc33'}];for(var si=0;si<steps.length;si++){await new Promise(function(r){setTimeout(r,300);});var d=document.createElement('div');d.className='ad-step vis';d.innerHTML='<span class="ad-step-dot" style="background:'+steps[si].color+'"></span><span class="ad-step-txt">'+esc(steps[si].label)+'</span>';meta.appendChild(d);}await new Promise(function(r){setTimeout(r,200);});var out=a.mockFn(input);res.innerHTML=esc(out);btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-check"></i> Запустить';}
+function drawFaq(){var el=document.getElementById('faqList');var h='';for(var i=0;i<FAQ.length;i++){h+='<div class="fi"><button class="fq-q" onclick="this.classList.toggle(\'open\');this.nextElementSibling.classList.toggle(\'open\')"><span>'+esc(FAQ[i].q)+'</span><i class="fa-solid fa-chevron-down"></i></button><div class="faq-a"><div class="faq-ai">'+esc(FAQ[i].a)+'</div></div></div>';}el.innerHTML=h;}
+function drawPolicy(){var el=document.getElementById('policyBox');var h='';for(var i=0;i<POLICY.length;i++){var p=POLICY[i];h+='<div class="po"><h4><i class="'+p.icon+'" style="color:var(--cy)"></i>'+esc(p.title)+'</h4><ul>';for(var j=0;j<p.items.length;j++) h+='<li>'+esc(p.items[j])+'</li>';h+='</ul></div>';}el.innerHTML=h;}
+function drawDonate(){var el=document.getElementById('dLinks');if(!D_LINKS.length){el.innerHTML='<div style="text-align:center;padding:16px;color:var(--tx3)">Нет способов</div>';return;}var h='';for(var i=0;i<D_LINKS.length;i++){var l=D_LINKS[i];h+='<a class="dl-a" href="'+esc(l.url)+'" target="_blank" rel="noopener"><div class="dl-i" style="background:'+l.bg+';color:'+l.color+'"><i class="'+l.icon+'"></i></div><div class="dl-info"><div class="dl-n">'+esc(l.name)+'</div><div class="dl-d">'+esc(l.desc)+'</div></div></a>';}el.innerHTML=h;}
+function openModal(){document.getElementById('modalBg').classList.add('open');var h='<div class="md-h"><h3>Добавить способ</h3><button class="md-x" onclick="document.getElementById(\'modalBg\').classList.remove(\'open\')"><i class="fa-solid fa-xmark"></i></button></div><div style="padding:20px"><div class="mf"><div class="ml">Название</div><input class="mi" id="mName"></div><div class="mf"><div class="ml">Ссылка</div><input class="mi" id="mUrl" placeholder="https://..."></div><div class="mft"><button class="mbtn c" onclick="document.getElementById(\'modalBg\').classList.remove(\'open\')">Отмена</button><button class="mbtn p" onclick="confirmAdd()">Добавить</button></div></div>';document.getElementById('modalEl').innerHTML=h;}
+function confirmAdd(){var n=document.getElementById('mName').value.trim();if(!n){toast('Укажите название');return;}D_LINKS.push({id:'c_'+Date.now(),name:n,desc:'',url:document.getElementById('mUrl').value,icon:'fa-solid fa-link',color:'#00ff88',bg:'rgba(0,255,136,.1)'});drawDonate();toast('Добавлено');document.getElementById('modalBg').classList.remove('open');}
+document.getElementById('modalBg').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+drawAgents();drawFaq();drawPolicy();drawDonate();
+</script>
+</body>
+</html>
